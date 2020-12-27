@@ -38,6 +38,9 @@ type C struct {
 	baseUrl *url.URL
 	client  *http.Client
 
+	basicAuthUsername string
+	basicAuthPassword string
+
 	// print ghost response as pretty-json
 	// helpful to debug the ghost api responses.
 	verbose bool
@@ -74,7 +77,13 @@ func (c *C) ContentPosts(opts ...ContentOption) (posts *content.Posts, err error
 		opt(&u)
 	}
 
-	resp, err := c.client.Get(u.String())
+	req, err := http.NewRequest("GET", u.String(), nil)
+	errz.Fatal(err)
+	if c.basicAuthUsername != "" || c.basicAuthPassword != "" {
+		req.SetBasicAuth(c.basicAuthUsername, c.basicAuthPassword)
+	}
+
+	resp, err := c.client.Do(req)
 	errz.Fatal(err)
 
 	body, err := ioutil.ReadAll(resp.Body)

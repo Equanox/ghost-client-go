@@ -18,6 +18,13 @@ func WithVerbose() Option {
 	}
 }
 
+func WithBasicAuth(username, password string) Option {
+	return func(client *C) {
+		client.basicAuthUsername = username
+		client.basicAuthPassword = password
+	}
+}
+
 // WithKey for authetication
 func WithKey(key string) ContentOption {
 	return func(u *url.URL) {
