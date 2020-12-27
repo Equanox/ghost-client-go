@@ -2,6 +2,11 @@
 Inclomplete api client for https://github.com/TryGhost/Ghost.
 
 # Getting Started
+
+* Start a ghost instance using docker https://hub.docker.com/_/ghost
+* Create a key for the content api
+
+
 ```
 u, _ := url.Parse("http://localhost:3001/ghost/api/v3")
 
